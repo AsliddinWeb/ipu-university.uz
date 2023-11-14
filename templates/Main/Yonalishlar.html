@@ -1,0 +1,45 @@
+<div class="rbt-categories-area bg-color-extra2 rbt-section-gapBottom  rbt-section-gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title text-center">
+                    <span class="subtitle bg-primary-opacity">{{ MORE_TEXTS.talim_yonalishlari_cap }}</span>
+                    <h2 class="title">{{ MORE_TEXTS.talim_yonalishlari_title }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row g-5 mt--20">
+            {% for i in YONALISHLAR %}
+              <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <a class="rbt-cat-box rbt-cat-box-1 text-center" href="{% url 'page_detail' slug=i.link %}">
+                    <div class="inner">
+                        <div class="icons">
+                            <img src="{{ i.image.url }}" alt="{{ i.title }}">
+                        </div>
+                        <div class="content">
+                            <h5 class="title">{{ i.title }}</h5>
+                            <div class="read-more-btn">
+                                {{ i.body|safe }}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="read-more-btn text-center mt--40">
+                    <a class="rbt-btn btn-border-gradient hover-icon-reverse radius-round btn-md"
+                       href="{% url 'page_detail' slug=MORE_TEXTS.talim_yonalishlari_more_link %}">
+                        <div class="icon-reverse-wrapper">
+                            <span class="btn-text">{{ MORE_TEXTS.talim_yonalishlari_barcha_yonalishlar }}</span>
+                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

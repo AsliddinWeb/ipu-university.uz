@@ -1,0 +1,111 @@
+{% load static %}
+{% load i18n %}
+{% load hitcount_tags %}
+
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    {% include 'components/meta_tags.html' %}
+
+    <title>{{ NEWS.title }} - {{ SEO_SETTINGS.title }}</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ SEO_SETTINGS.favicon.url }}">
+
+    {% include 'components/css_links.html' %}
+</head>
+
+<body class="rbt-header-sticky" style="">
+    {% include 'components/header.html' %}
+    {% include 'components/mobile-header.html' %}
+    <a class="close_side_menu" href="javascript:void(0);"></a>
+
+    <div class="rbt-overlay-page-wrapper">
+        <div class="breadcrumb-image-container breadcrumb-style-max-width">
+            <div class="breadcrumb-image-wrapper">
+                <img src="{% static 'images/news_bg.jpg' %}" alt="Education Images">
+            </div>
+            <div class="breadcrumb-content-top text-center">
+                <ul class="meta-list justify-content-center mb--10">
+                    <li class="list-item">
+                        <i class="feather-eye"></i>
+                        {% get_hit_count for NEWS %} {{ MORE_TEXTS.news_korishlar_soni }}
+                    </li>
+                    <li class="list-item">
+                        <i class="feather-clock"></i>
+                        <span>{{ NEWS.created_at }}</span>
+                    </li>
+                </ul>
+                <h3 class="title">{{ NEWS.title }}</h3>
+                <p>{{ SEO_SETTINGS.title }}</p>
+            </div>
+        </div>
+
+        <div class="rbt-blog-details-area rbt-section-gapBottom breadcrumb-style-max-width">
+            <div class="blog-content-wrapper rbt-article-content-wrapper">
+                <div class="content">
+                    <div class="post-thumbnail mb--30 position-relative wp-block-image alignwide">
+                        <figure>
+                            <img src="{{ NEWS.image.url }}" alt="{{ NEWS.image_cap }}">
+                            <figcaption>{{ NEWS.image_cap }}</figcaption>
+                        </figure>
+                    </div>
+                    {{ NEWS.body|safe }}
+
+
+                    <!-- Social Share Block  -->
+                    <div class="social-share-block">
+                        <div class="post-like">
+                            <a href="{% url 'home_page' %}"><i class="fa fa-home"></i><span>{{ MORE_TEXTS.bosh_sahifa }}</span></a>
+                        </div>
+                        <ul class="social-icon social-default transparent-with-border">
+                            {% for i in SOCIAL_NETWORKS %}
+                                <li>
+                                    <a href="{{ i.link }}">
+                                        <i class="{{ i.icon }}"></i>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="related-post pt--60">
+                    <div class="section-title text-start mb--40">
+                        <span class="subtitle bg-primary-opacity">{{ MORE_TEXTS.qaynoq_yangiliklar_cap }}</span>
+                        <h4 class="title">{{ MORE_TEXTS.qaynoq_yangiliklar_cap }}</h4>
+                    </div>
+
+                    {% for news in ALL_NEWS %}
+                        <div class="rbt-card card-list variation-02 rbt-hover mt--30">
+                            <div class="rbt-card-img">
+                                <a href="{% url 'news_detail' slug=news.slug %}">
+                                    <img src="{{ news.image.url }}" alt="{{ news.image_cap }}"> </a>
+                            </div>
+                            <div class="rbt-card-body">
+                                <h5 class="rbt-card-title"><a href="{% url 'news_detail' slug=news.slug %}">{{ news.title }}</a>
+                                </h5>
+                                <div class="rbt-card-bottom">
+                                    <a class="transparent-button" href="{% url 'news_detail' slug=news.slug %}">
+                                        {{ MORE_TEXTS.news_more }}
+                                        <i><svg width="17" height="12" xmlns="http://www.w3.org/2000/svg"><g stroke="#27374D" fill="none" fill-rule="evenodd"><path d="M10.614 0l5.629 5.629-5.63 5.629"></path><path stroke-linecap="square" d="M.663 5.572h14.594"></path></g></svg></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'components/footer.html' %}
+    <div class="rbt-progress-parent rbt-backto-top-active">
+        <svg class="rbt-back-circle svg-inner" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 291.575;"></path>
+        </svg>
+    </div>
+
+    {% include 'components/js_links.html' %}
+</body></html>

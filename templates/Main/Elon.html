@@ -1,0 +1,99 @@
+<div class="rbt-rbt-blog-area rbt-section-gap bg-color-extra">
+    <div class="container">
+        <div class="row g-5 align-items-center mb--30">
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="section-title">
+                    <span class="subtitle bg-pink-opacity">{{ MORE_TEXTS.elon_cap }}</span>
+                    <h2 class="title">{{ MORE_TEXTS.elon_title }}</h2>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="read-more-btn text-start text-md-end">
+                    <a class="rbt-btn btn-gradient hover-icon-reverse" href="blog.html">
+                        <div class="icon-reverse-wrapper">
+                            <span class="btn-text">{{ MORE_TEXTS.elon_more }}</span>
+                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row row--15">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-12 mt--30" data-sal-delay="150" data-sal="slide-up"
+                 data-sal-duration="800">
+                <div class="rbt-card variation-02 height-330 rbt-hover">
+                    <div class="rbt-card-img">
+                        <a href="#">
+                            <img src="{{ ELONLAR.0.image.url }}" alt="{{ ELONLAR.0.title }}"> </a>
+                    </div>
+                    <div class="rbt-card-body">
+                        <h3 class="rbt-card-title"><a href="#">{{ ELONLAR.0.title|truncatewords:6 }}</a>
+                        </h3>
+                        <p class="rbt-card-text">{{ ELONLAR.0.body|safe|truncatewords:10 }}</p>
+                        <div class="rbt-card-bottom">
+                            <a class="transparent-button" href="#">{{ MORE_TEXTS.news_more }}<i>
+                                <svg width="17" height="12" xmlns="http://www.w3.org/2000/svg">
+                                    <g stroke="#27374D" fill="none" fill-rule="evenodd">
+                                        <path d="M10.614 0l5.629 5.629-5.63 5.629"/>
+                                        <path stroke-linecap="square" d="M.663 5.572h14.594"/>
+                                    </g>
+                                </svg>
+                            </i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12 col-12 mt--30" data-sal-delay="150" data-sal="slide-up"
+                 data-sal-duration="800">
+                {% for i in ELONLAR3 %}
+                    {% if forloop.counter == 1 %}
+                        <div class="rbt-card card-list variation-02 rbt-hover">
+                            <div class="rbt-card-img">
+                                <a href="#">
+                                    <img src="{{ i.image.url }}" alt="{{ i.title }}"> </a>
+                            </div>
+                            <div class="rbt-card-body">
+                                <h5 class="rbt-card-title"><a href="#">{{ i.title|truncatewords:5 }}</a>
+                                </h5>
+                                <div class="rbt-card-bottom">
+                                    <a class="transparent-button" href="#">{{ MORE_TEXTS.news_more }}<i>
+                                        <svg width="17" height="12" xmlns="http://www.w3.org/2000/svg">
+                                            <g stroke="#27374D" fill="none" fill-rule="evenodd">
+                                                <path d="M10.614 0l5.629 5.629-5.63 5.629"/>
+                                                <path stroke-linecap="square" d="M.663 5.572h14.594"/>
+                                            </g>
+                                        </svg>
+                                    </i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="rbt-card card-list variation-02 rbt-hover mt--30">
+                            <div class="rbt-card-img">
+                                <a href="#">
+                                    <img src="{{ i.image.url }}" alt="{{ i.title }}"> </a>
+                            </div>
+                            <div class="rbt-card-body">
+                                <h5 class="rbt-card-title"><a href="#">{{ i.title|truncatewords:5 }}</a>
+                                </h5>
+                                <div class="rbt-card-bottom">
+                                    <a class="transparent-button" href="#">{{ MORE_TEXTS.news_more }}<i>
+                                        <svg width="17" height="12" xmlns="http://www.w3.org/2000/svg">
+                                            <g stroke="#27374D" fill="none" fill-rule="evenodd">
+                                                <path d="M10.614 0l5.629 5.629-5.63 5.629"/>
+                                                <path stroke-linecap="square" d="M.663 5.572h14.594"/>
+                                            </g>
+                                        </svg>
+                                    </i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>

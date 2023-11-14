@@ -1,0 +1,306 @@
+{% load static %}
+{% load i18n %}
+
+<header class="rbt-header rbt-header-10">
+        <div class="rbt-sticky-placeholder"></div>
+
+        <div
+            class="rbt-header-top rbt-header-top-1 header-space-betwween bg-not-transparent bg-color-darker top-expended-activation">
+            <div class="container-fluid">
+                <div class="top-expended-wrapper">
+                    <div class="top-expended-inner rbt-header-sec align-items-center ">
+                        <div class="rbt-header-sec-col rbt-header-left d-none d-xl-block">
+                            <div class="rbt-header-content">
+                                <div class="header-info">
+                                    <ul class="rbt-information-list">
+                                        <li>
+                                            <a href="tel:{{ TOP_HEADER.phone_number }}"><i class="feather-phone"></i>{{ TOP_HEADER.phone_number }}</a>
+                                        </li>
+                                        |
+                                        <li>
+                                            <a href="mailto:{{ TOP_HEADER.email }}"><i class="feather-mail"></i>{{ TOP_HEADER.email }}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rbt-header-sec-col rbt-header-center">
+                            <div class="rbt-header-content justify-content-start justify-content-xl-center">
+                                <div class="header-info">
+                                    <div class="rbt-header-top-news">
+                                        <div class="inner">
+                                            <div class="content">
+                                                <span class="news-text">{{ TOP_HEADER.text }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rbt-header-sec-col rbt-header-right mt_md--10 mt_sm--10">
+                            <div class="rbt-header-content justify-content-start justify-content-lg-end">
+                                <div class="header-info d-none d-xl-block">
+                                    <ul class="social-share-transparent">
+                                        {% for i in SOCIAL_NETWORKS %}
+                                            <li>
+                                                <a href="{{ i.link }}"><i class="{{ i.icon }}"></i></a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                                <div class="rbt-separator d-none d-xl-block"></div>
+
+                                <div class="header-info">
+                                    <ul class="rbt-dropdown-menu switcher-language">
+    {% get_current_language as CURRENT_LANGUAGE %}
+    {% get_language_info for CURRENT_LANGUAGE as lang %}
+    {% get_available_languages as AVAILABLE_LANGUAGES %}
+    {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+    <li class="has-child-menu">
+        <a>
+            <img class="left-image" src="{% static 'images/flag/' %}{{ CURRENT_LANGUAGE }}.png" alt="{{ CURRENT_LANGUAGE }}">
+            <span class="menu-item">{{ lang.name_local|capfirst }}</span>
+            <i class="right-icon feather-chevron-down"></i>
+        </a>
+        <ul class="sub-menu">
+            {% for language in languages %}
+                {% if language.code != CURRENT_LANGUAGE %}
+                    <li>
+                        <a href="/{{ language.code }}/">
+                            <img class="left-image" src="{% static 'images/flag/' %}{{ language.code }}.png" alt="{{ language.name_local }}">
+
+                            <span class="menu-item">{{ language.name_local|capfirst }}</span>
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </li>
+</ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header-info">
+                        <div class="top-bar-expended d-block d-lg-none">
+                            <button class="topbar-expend-button rbt-round-btn"><i class="feather-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- End Header Top  -->
+        <div class="rbt-header-wrapper header-space-betwween header-sticky">
+            <div class="container-fluid">
+                <div class="mainbar-row rbt-navigation-center align-items-center">
+                    <div class="header-left rbt-header-content">
+                        <div class="header-info">
+                            <div class="logo">
+                                <a href="{% url 'home_page' %}">
+                                    <img src="{{ HEADER_LOGO.dark_logo.url }}" alt="{{ HEADER_LOGO.alt }}">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rbt-main-navigation d-none d-xl-block">
+                        <nav class="mainmenu-nav">
+                            <ul class="mainmenu">
+                                {% for one_header in ONE_HEADER %}
+                                    <li class="has-dropdown has-menu-child-item">
+                                        {% if one_header.is_submenu %}
+                                            <a>
+                                                {{ one_header.title }}
+                                                <i class="feather-chevron-down"></i>
+                                            </a>
+                                            <ul class="submenu">
+                                                {% for two_header in TWO_HEADER %}
+                                                    {% if two_header.one_header.id == one_header.id %}
+                                                        {% if two_header.is_submenu %}
+                                                            <li class="has-dropdown">
+                                                                <a>
+                                                                    {{ two_header.title }}
+                                                                </a>
+
+                                                            <ul class="submenu">
+                                                                {% for three_header in THREE_HEADER %}
+                                                                    {% if three_header.one_header.id == one_header.id and three_header.two_header.id == two_header.id %}
+                                                                        {% if three_header.link|slice:':4' == 'page' %}
+                                                                            <li>
+                                                                                <a href="{% url 'page_detail' slug=three_header.link|slice:'5:' %}">{{ three_header.title }}</a>
+                                                                            </li>
+                                                                        {% elif three_header.link|slice:':4'  == 'link' %}
+                                                                            <li>
+                                                                                <a href="{{ three_header.link|slice:'5:' }}">{{ three_header.title }}</a>
+                                                                            </li>
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </ul>
+                                                    </li>
+                                                        {% else %}
+                                                            {% if two_header.link|slice:':4' == 'page' %}
+                                                                <li class="has-dropdown">
+                                                                    <a href="{% url 'page_detail' slug=two_header.link|slice:'5:' %}">{{ two_header.title }}</a>
+                                                                </li>
+                                                            {% elif two_header.link|slice:':4'  == 'link' %}
+                                                                <li class="has-dropdown">
+                                                                    <a href="{{ two_header.link|slice:'5:' }}">{{ two_header.title }}</a>
+                                                                </li>
+                                                            {% elif two_header.link|slice:':4' == 'slug' %}
+                                                                <li class="has-dropdown">
+                                                                    <a href="{% url two_header.link|slice:'5:' %}">{{ two_header.title }}</a>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            {% if one_header.link|slice:':4' == 'page' %}
+                                                <a href="{% url 'page_detail' slug=one_header.link|slice:'5:' %}">{{ one_header.title }}</a>
+                                            {% elif one_header.link|slice:':4'  == 'link' %}
+                                                <a href="{{ one_header.link|slice:'5:' }}">{{ one_header.title }}</a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div class="header-right">
+
+                        <!-- Navbar Icons -->
+                        <ul class="quick-access">
+                            <li class="access-icon">
+                                <a class="search-trigger-active rbt-round-btn" href="#">
+                                    <i class="feather-search"></i>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="rbt-btn-wrapper d-none d-xl-block">
+                            {% if RIGHT_BUTTON.link|slice:':4' == 'page' %}
+                                <a class="rbt-btn btn-gradient btn-sm rbt-marquee-btn radius-round" href="{% url 'page_detail' slug=RIGHT_BUTTON.link|slice:'5:' %}">
+                                    <span data-text="{{ RIGHT_BUTTON.title }}">{{ RIGHT_BUTTON.title }}</span>
+                                </a>
+                            {% elif RIGHT_BUTTON.link|slice:':4' == 'link' %}
+                                <a class="rbt-btn btn-gradient btn-sm rbt-marquee-btn radius-round" href="{{ RIGHT_BUTTON.link|slice:'5:' }}">
+                                    <span data-text="{{ RIGHT_BUTTON.title }}">{{ RIGHT_BUTTON.title }}</span>
+                                </a>
+                            {% endif %}
+                        </div>
+
+                        <!-- Start Mobile-Menu-Bar -->
+                        <div class="mobile-menu-bar d-block d-xl-none">
+                            <div class="hamberger">
+                                <button class="hamberger-button rbt-round-btn">
+                                    <i class="feather-menu"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Start Search Dropdown  -->
+            <div class="rbt-search-dropdown">
+                <div class="wrapper">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form action="#">
+                                <input type="text" placeholder="{{ MORE_TEXTS.qidirish_1 }}">
+                                <div class="submit-btn">
+                                    <a class="rbt-btn btn-gradient btn-md" href="#">{{ MORE_TEXTS.qidirish_2 }}</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="rbt-separator-mid">
+                        <hr class="rbt-separator m-0">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="rbt-offcanvas-side-menu rbt-category-sidemenu">
+            <div class="inner-wrapper">
+                <div class="inner-top">
+                    <div class="inner-title">
+                        <h4 class="title">Course Category</h4>
+                    </div>
+                    <div class="rbt-btn-close">
+                        <button class="rbt-close-offcanvas rbt-round-btn"><i class="feather-x"></i></button>
+                    </div>
+                </div>
+
+                <nav class="side-nav w-100">
+                            <ul class="rbt-vertical-nav-list-wrapper vertical-nav-menu">
+                                {% for one_header in ONE_HEADER %}
+                                    <li class="vertical-nav-item">
+                                        {% if one_header.is_submenu %}
+                                            <a>
+                                                {{ one_header.title }}
+                                                <i class="feather-chevron-down"></i>
+                                            </a>
+                                            <ul class="rbt-vertical-nav-list-wrapper">
+                                                {% for two_header in TWO_HEADER %}
+                                                    {% if two_header.one_header.id == one_header.id %}
+                                                        {% if two_header.is_submenu %}
+                                                            <li class="has-dropdown">
+                                                                <a>
+                                                                    {{ two_header.title }}
+                                                                </a>
+
+                                                            <ul class="submenu">
+                                                                {% for three_header in THREE_HEADER %}
+                                                                    {% if three_header.one_header.id == one_header.id and three_header.two_header.id == two_header.id %}
+                                                                        {% if three_header.link|slice:':4' == 'page' %}
+                                                                            <li>
+                                                                                <a href="{% url 'page_detail' slug=three_header.link|slice:'5:' %}">{{ three_header.title }}</a>
+                                                                            </li>
+                                                                        {% elif three_header.link|slice:':4'  == 'link' %}
+                                                                            <li>
+                                                                                <a href="{{ three_header.link|slice:'5:' }}">{{ three_header.title }}</a>
+                                                                            </li>
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </ul>
+                                                    </li>
+                                                        {% else %}
+                                                            {% if two_header.link|slice:':4' == 'page' %}
+                                                                <li class="has-dropdown">
+                                                                    <a href="{% url 'page_detail' slug=two_header.link|slice:'5:' %}">{{ two_header.title }}</a>
+                                                                </li>
+                                                            {% elif two_header.link|slice:':4'  == 'link' %}
+                                                                <li class="has-dropdown">
+                                                                    <a href="{{ two_header.link|slice:'5:' }}">{{ two_header.title }}</a>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            {% if one_header.link|slice:':4' == 'page' %}
+                                                <a href="{% url 'page_detail' slug=one_header.link|slice:'5:' %}">{{ one_header.title }}</a>
+                                            {% elif one_header.link|slice:':4'  == 'link' %}
+                                                <a href="{{ one_header.link|slice:'5:' }}">{{ one_header.title }}</a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                <div class="rbt-offcanvas-footer">
+
+                </div>
+            </div>
+        </div>
+        <a class="rbt-close_side_menu" href="javascript:void(0);"></a>
+    </header>

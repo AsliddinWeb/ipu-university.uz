@@ -1,0 +1,92 @@
+<footer class="rbt-footer footer-style-1">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row row--15 mt_dec--30">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12 mt--30">
+                    <div class="footer-widget">
+                        <div class="logo">
+                            <a href="{% url 'home_page' %}">
+                                <img src="{{ FOOTER_INFO.light_logo.url }}" alt="{{ FOOTER_INFO.copyright }}">
+                            </a>
+                        </div>
+
+                        <p class="description mt--20">{{ FOOTER_INFO.text }}</p>
+                    </div>
+                </div>
+
+                <div class="offset-lg-1 col-lg-2 col-md-6 col-sm-6 col-12 mt--30">
+                    <div class="footer-widget">
+                        <h5 class="ft-title">{{ MORE_TEXTS.footer_foydali_sahifalar }}</h5>
+                        <ul class="ft-link">
+                            {% for i in FOOTER_FOYDALI_LINKS %}
+                            <li>
+                                <a href="{{ i.link }}">{{ i.title }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-sm-6 col-12 mt--30">
+                    <div class="footer-widget">
+                        <h5 class="ft-title">{{ MORE_TEXTS.footer_interaktiv_hizmatlar }}</h5>
+                        <ul class="ft-link">
+                            {% for i in FOOTER_INTERAKTIV_LINKS %}
+                            <li>
+                                <a href="{{ i.link }}">{{ i.title }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12 mt--30">
+                    <div class="footer-widget">
+                        <h5 class="ft-title">{{ MORE_TEXTS.footer_boglanish }}</h5>
+                        <ul class="ft-link">
+                            <li>{{ FOOTER_INFO.phone_number|safe }}</li>
+                            <li>{{ FOOTER_INFO.email|safe }}</li>
+                            <li>{{ FOOTER_INFO.location|safe }}</li>
+                        </ul>
+                        <ul class="social-icon social-default icon-naked justify-content-start mt--20">
+                            {% for i in SOCIAL_NETWORKS %}
+                            <li>
+                                <a href="{{ i.link }}" target="_blank">
+                                    <i class="{{ i.icon }}"></i>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="rbt-separator-mid">
+    <div class="container">
+        <hr class="rbt-separator m-0">
+    </div>
+</div>
+<div class="copyright-area copyright-style-1 ptb--20">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12">
+                {{ FOOTER_INFO.copyright }}
+            </div>
+            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12">
+                <ul
+                        class="copyright-link rbt-link-hover justify-content-center justify-content-lg-end mt_sm--10 mt_md--10">
+                    {% for i in SOCIAL_NETWORKS %}
+                    <li>
+                        <a href="{{ i.link }}" target="_blank">
+                            {{ i.title }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

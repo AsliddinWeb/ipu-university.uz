@@ -1,0 +1,56 @@
+{% load static %}
+{% load i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+
+<head>
+    {% include 'components/meta_tags.html' %}
+
+    <title>{{ PAGE.title }} - {{ SEO_SETTINGS.title }}</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ SEO_SETTINGS.favicon.url }}">
+
+    {% include 'components/css_links.html' %}
+</head>
+
+<body class="rbt-header-sticky">
+
+    {% include 'components/header.html' %}
+    {% include 'components/mobile-header.html' %}
+    <a class="close_side_menu" href="javascript:void(0);"></a>
+
+    <div class="rbt-breadcrumb-default ptb--50 ptb_md--50 ptb_sm--30 bg-gradient-1">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-inner text-center">
+                        <h2 class="title">{{ PAGE.title }}</h2>
+                        <ul class="page-list">
+                            <li class="rbt-breadcrumb-item"><a href="{% url 'home_page' %}">{{ MORE_TEXTS.bosh_sahifa }}</a></li>
+                            <li>
+                                <div class="icon-right"><i class="feather-chevron-right"></i></div>
+                            </li>
+                            <li class="rbt-breadcrumb-item active">{{ PAGE.title }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ PAGE.body|safe }}
+
+    {% include 'components/footer.html' %}
+
+    <div class="rbt-progress-parent rbt-backto-top-active">
+        <svg class="rbt-back-circle svg-inner" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 260.452;"></path>
+        </svg>
+    </div>
+
+    {% include 'components/js_links.html' %}
+</body></html>

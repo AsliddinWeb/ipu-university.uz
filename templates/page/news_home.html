@@ -1,0 +1,198 @@
+{% load static %}
+{% load i18n %}
+{% load hitcount_tags %}
+
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+    {% include 'components/meta_tags.html' %}
+
+    <title>{{ SEO_SETTINGS.title }}</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ SEO_SETTINGS.favicon.url }}">
+
+    {% include 'components/css_links.html' %}
+</head>
+
+<body class="rbt-header-sticky" style="">
+
+    {% include 'components/header.html' %}
+    {% include 'components/mobile-header.html' %}
+    <a class="close_side_menu" href="javascript:void(0);"></a>
+
+    <div class="rbt-page-banner-wrapper">
+        <!-- Start Banner BG Image  -->
+        <div class="rbt-banner-image"></div>
+        <!-- End Banner BG Image  -->
+        <div class="rbt-banner-content">
+
+            <!-- Start Banner Content Top  -->
+            <div class="rbt-banner-content-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="page-list">
+                                <li class="rbt-breadcrumb-item"><a href="{% url 'home_page' %}">{{ MORE_TEXTS.bosh_sahifa }}</a></li>
+                                <li>
+                                    <div class="icon-right"><i class="feather-chevron-right"></i></div>
+                                </li>
+                                <li class="rbt-breadcrumb-item active">{{ MORE_TEXTS.barcha_yangiliklar }}</li>
+                            </ul>
+
+                            <div class="title-wrapper">
+                                <h1 class="title mb--0">{{ MORE_TEXTS.barcha_yangiliklar }}</h1>
+                                <a href="{% url 'news_home' %}" class="rbt-badge-2">
+                                    <div class="image">🎉</div> {{ NEWS_LEN }} {{ MORE_TEXTS.ta }}
+                                </a>
+                            </div>
+
+                            <p class="description">{{ MORE_TEXTS.yangiliklar_text }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="rbt-section-overlayping-top rbt-section-gapBottom">
+        <div class="container">
+            <div class="row row--30 gy-5">
+
+                <div class="col-lg-8">
+
+                    <div class="row g-5">
+                        {% for i in items %}
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="rbt-blog-grid rbt-card variation-02 rbt-hover">
+                                    <div class="rbt-card-img">
+                                        <a href="{% url 'news_detail' slug=i.slug %}">
+                                            <img src="{{ i.image.url }}" alt="{{ i.image_cap }}"> </a>
+                                    </div>
+                                    <div class="rbt-card-body">
+                                        <h5 class="rbt-card-title"><a href="{% url 'news_detail' slug=i.slug %}">{{ i.title|truncatewords:10 }}</a></h5>
+
+                                        <ul class="blog-meta">
+                                            <li><i class="feather-calendar"></i> {{ i.created_at }}</li>
+                                            <li><i class="feather-eye"></i> {% get_hit_count for i %} {{ MORE_TEXTS.ta }}</li>
+                                        </ul>
+                                        <p class="rbt-card-text">{{ i.body|safe|truncatewords:25 }}</p>
+                                        <div class="rbt-card-bottom">
+                                            <a class="transparent-button" href="{% url 'news_detail' slug=i.slug %}">{{ MORE_TEXTS.news_more }}<i><svg width="17" height="12" xmlns="http://www.w3.org/2000/svg"><g stroke="#27374D" fill="none" fill-rule="evenodd"><path d="M10.614 0l5.629 5.629-5.63 5.629"></path><path stroke-linecap="square" d="M.663 5.572h14.594"></path></g></svg></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 mt--60">
+                            <nav>
+                                <ul class="rbt-pagination">
+                                    {% if items.has_previous %}
+                                    <li><a href="{{ items.previous_page_number }}" aria-label="Previous"><i class="feather-chevron-left"></i></a></li>
+                                    {% else %}
+                                    <li><a aria-label="Previous"><i class="feather-chevron-left"></i></a></li>
+                                    {% endif %}
+
+                                    {% for page_num in items.paginator.page_range %}
+                                        <li {% if items.number == page_num %} class="active"{% endif %}>
+                                            <a href="?page={{ page_num }}">{{ page_num }}</a>
+                                        </li>
+                                    {% endfor %}
+
+                                    {% if items.has_next %}
+                                        <li><a href="?page={{ items.next_page_number }}" aria-label="Next"><i class="feather-chevron-right"></i></a></li>
+                                    {% else %}
+                                        <li><a aria-label="Next"><i class="feather-chevron-right"></i></a></li>
+                                    {% endif %}
+
+                                </ul>
+                                <ul>
+                            </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4">
+                    <aside class="rbt-sidebar-widget-wrapper rbt-gradient-border">
+
+                        <div class="rbt-single-widget rbt-widget-search">
+                            <div class="inner">
+                                <form action="{% url 'news_home' %}" class="rbt-search-style-1">
+                                    <input name="search" type="text" placeholder="{{ MORE_TEXTS.qidirish_1 }}">
+                                    <button class="search-btn"><i class="feather-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="rbt-single-widget rbt-widget-recent">
+                            <div class="inner">
+                                <h4 class="rbt-widget-title">{{ MORE_TEXTS.oxirgi_yangiliklar }}</h4>
+                                <ul class="rbt-sidebar-list-wrapper recent-post-list">
+                                    {% for i in NEWS_4 %}
+                                        <li>
+                                            <div class="thumbnail">
+                                                <a href="{% url 'news_detail' slug=i.slug %}">
+                                                    <img src="{{ i.image.url }}" alt="{{ i.image_cap }}">
+                                                </a>
+                                            </div>
+                                            <div class="content">
+                                                <h6 class="title"><a href="{% url 'news_detail' slug=i.slug %}">{{ i.title }}</a></h6>
+                                                <ul class="rbt-meta">
+                                                    <li><i class="feather-clock"></i> {{ i.created_at }}</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="rbt-single-widget rbt-widget-recent">
+                            <div class="inner">
+                                <h4 class="rbt-widget-title">{{ MORE_TEXTS.kop_korilgan_yangiliklar }}</h4>
+                                <ul class="rbt-sidebar-list-wrapper recent-post-list">
+                                    {% for i in POPULAR_NEWS_4 %}
+                                        <li>
+                                            <div class="thumbnail">
+                                                <a href="{% url 'news_detail' slug=i.slug %}">
+                                                    <img src="{{ i.image.url }}" alt="{{ i.image_cap }}">
+                                                </a>
+                                            </div>
+                                            <div class="content">
+                                                <h6 class="title"><a href="{% url 'news_detail' slug=i.slug %}">{{ i.title }}</a></h6>
+                                                <ul class="rbt-meta">
+                                                    <li><i class="feather-eye"></i> {% get_hit_count for i %} {{ MORE_TEXTS.ta }}</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="rbt-separator-mid">
+        <div class="container">
+            <hr class="rbt-separator m-0">
+        </div>
+    </div>
+    {% include 'components/footer.html' %}
+    <div class="rbt-progress-parent">
+        <svg class="rbt-back-circle svg-inner" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 307.919;"></path>
+        </svg>
+    </div>
+
+    {% include 'components/js_links.html' %}
+</body>
+</html>
